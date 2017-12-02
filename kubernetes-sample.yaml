@@ -1,0 +1,37 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: unbound
+spec:
+  restartPolicy: Always
+  hostNetwork: true
+  containers:
+  - name: unbound
+    image: randomcoww/k8s-unbound:latest
+    args:
+    - "-d"
+    env:
+    - name: CONFIG
+      value: |
+        server:
+          verbosity: 1
+          interface-automatic: yes
+          root-hints: /etc/unbound/root.hints
+          interface: 0.0.0.0
+          num-threads: 2
+          do-ip6: no
+          do-udp: yes
+          do-tcp: yes
+          access-control: 127.0.0.0/8 allow
+          access-control: 192.168.62.0/23 allow
+          access-control: 192.168.30.0/23 allow
+          do-not-query-localhost: no
+          local-zone: lan nodefault
+          private-domain: lan
+          domain-insecure: lan
+        remote-control:
+          control-enable: yes
+        stub-zone:
+          name: lan
+          stub-addr: 127.0.0.1@53530
