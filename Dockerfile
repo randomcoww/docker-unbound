@@ -1,16 +1,21 @@
 FROM alpine:latest
 
-RUN \
-  apk add --no-cache unbound && \
-  mkdir /etc/unbound/unbound.conf.d
+ENV ROOT_HINTS_URL https://www.internic.net/domain/named.cache
+
+RUN set -x \
+  \
+  && apk add --no-cache unbound
 
 COPY unbound.conf /etc/unbound/unbound.conf
-ADD https://www.internic.net/domain/named.cache /etc/unbound/root.hints
+ADD $ROOT_HINTS_URL /etc/unbound/root.hints
 
-RUN \
-  chmod +r \
-  /etc/unbound/unbound.conf \
-  /etc/unbound/root.hints
+RUN set -x \
+  \
+  && mkdir -p \
+    /etc/unbound/unbound.conf.d \
+  && chmod +r \
+    /etc/unbound/unbound.conf \
+    /etc/unbound/root.hints
 
 COPY entrypoint.sh /
 ENTRYPOINT ["/entrypoint.sh"]
