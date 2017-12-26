@@ -6,7 +6,6 @@ RUN set -x \
   \
   && apk add --no-cache \
     unbound \
-    shadow \
   \
   && mkdir -p /etc/unbound/unbound.conf.d
 
