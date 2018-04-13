@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM alpine:edge
 
 ENV ROOT_HINTS_URL https://www.internic.net/domain/named.cache
 
