@@ -1,5 +1,8 @@
 #!/bin/sh
-echo -en "$CONFIG" > /etc/unbound/unbound.conf.d/50-config.conf
+
+if [ -n "$UNBOUND_LOCAL_CONFIG" ]; then
+  echo -en "$UNBOUND_LOCAL_CONFIG" > /etc/unbound/unbound.conf.d/50-config.conf
+fi
 
 ## dnssec
 unbound-anchor -a /etc/unbound/trusted-key.key

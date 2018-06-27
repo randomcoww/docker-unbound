@@ -12,5 +12,5 @@ RUN set -x \
 ADD $ROOT_HINTS_URL /etc/unbound/root.hints
 COPY unbound.conf /etc/unbound/unbound.conf
 
-COPY entrypoint.sh /
-ENTRYPOINT ["/entrypoint.sh"]
+COPY docker-entrypoint.sh /
+ENTRYPOINT ["/docker-entrypoint.sh"]
